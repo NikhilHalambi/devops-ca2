@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Student Feedback Registration Form</title>
+  <meta name="description" content="Student Feedback Registration Form — Submit your course and faculty feedback." />
+
+  <link rel="stylesheet" href="style.css" />
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+
+  <style>
+    :root {
+      --primary:     #0d9488;
+      --primary-dk:  #0f766e;
+      --primary-lt:  #ccfbf1;
+      --accent:      #f59e0b;
+      --danger:      #ef4444;
+      --success:     #10b981;
+      --text:        #1e293b;
+      --muted:       #64748b;
+      --border:      #e2e8f0;
+      --surface:     #f8fafc;
+    }
+
+    .field-group {
+      position: relative;
+    }
+    .field-group label {
+      position: absolute;
+      top: 50%;
+      left: 0.95rem;
+      transform: translateY(-50%);
+      color: var(--muted);
+      font-size: 0.9rem;
+      pointer-events: none;
+      transition: all 0.22s ease;
+      background: transparent;
+      padding: 0 4px;
+      font-weight: 400;
+    }
+    .field-group.textarea-wrap label {
+      top: 1rem;
+      transform: none;
+    }
+    .field-group input:focus ~ label,
+    .field-group input:not(:placeholder-shown) ~ label,
+    .field-group select ~ label,
+    .field-group textarea:focus ~ label,
+    .field-group textarea:not(:placeholder-shown) ~ label {
+      top: 0;
+      font-size: 0.7rem;
+      color: var(--primary);
+      background: #fff;
+      font-weight: 600;
+      letter-spacing: 0.04em;
+    }
+
+    #feedback-wordcount {
+      font-size: 0.72rem;
+      text-align: right;
+      margin-top: 4px;
+      min-height: 16px;
+      transition: color 0.2s;
+      color: var(--muted);
+    }
+    #feedback-wordcount.ok  { color: var(--success); font-weight: 600; }
+    #feedback-wordcount.bad { color: var(--danger); }
+
+    .star-row {
+      display: flex;
+      gap: 0.35rem;
+      margin-top: 0.4rem;
+    }
+    .star-row i {
+      font-size: 1.6rem;
+      color: #d1d5db;
+      cursor: pointer;
+      transition: color 0.15s, transform 0.15s;
+    }
+    .star-row i.active,
+    .star-row i:hover { color: var(--accent); transform: scale(1.2); }
+
+    .btn-submit::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      border-radius: inherit;
+      background: radial-gradient(circle, rgba(255,255,255,0.3) 0%, transparent 70%);
+      opacity: 0;
+      transition: opacity 0.35s;
+    }
+    .btn-submit:active::after { opacity: 1; }
+  </style>
+</head>
+
+<body>
+
+  <div class="top-bar">
+    <div class="top-bar-inner">
+      <div class="brand">
+        <i class="fa-solid fa-graduation-cap brand-icon"></i>
+        <span>StudentFeedback<strong>Portal</strong></span>
+      </div>
+      <div class="tagline">Your voice shapes our future</div>
+    </div>
+  </div>
+
+  <main class="page-wrap">
+
+    <aside class="sidebar">
+      <div class="sidebar-title">Why give feedback?</div>
+      <ul class="sidebar-list">
+        <li><i class="fa-solid fa-circle-check"></i> Improves teaching quality</li>
+        <li><i class="fa-solid fa-circle-check"></i> Shapes curriculum design</li>
+        <li><i class="fa-solid fa-circle-check"></i> Enhances student experience</li>
+        <li><i class="fa-solid fa-circle-check"></i> Drives institutional growth</li>
+      </ul>
+      <div class="sidebar-note">
+        <i class="fa-solid fa-lock"></i>
+        All responses are confidential and reviewed anonymously.
+      </div>
+      <div class="sidebar-decoration" aria-hidden="true"></div>
+    </aside>
+
+    <section class="form-card">
+
+      <div class="form-header">
+        <h1>Student Feedback Form</h1>
+        <p>Please fill in the details below. Fields marked <span class="req-star">*</span> are required.</p>
+      </div>
+
+      <form id="feedbackForm" autocomplete="off" novalidate>
+
+        <div class="form-row two-col">
+          <div class="form-group" id="group-name">
+            <div class="field-group">
+              <input type="text" id="studentName" name="studentName" placeholder=" "
+                     autocomplete="off" aria-required="true" aria-describedby="name-error" />
+              <label for="studentName">Student Name <span class="req-star">*</span></label>
+              <span class="field-icon"><i class="fa-regular fa-user"></i></span>
+            </div>
+            <span class="error-msg" id="name-error" role="alert"></span>
+          </div>
+
+          <div class="form-group" id="group-email">
+            <div class="field-group">
+              <input type="email" id="emailId" name="emailId" placeholder=" "
+                     autocomplete="off" aria-required="true" aria-describedby="email-error" />
+              <label for="emailId">Email ID <span class="req-star">*</span></label>
+              <span class="field-icon"><i class="fa-regular fa-envelope"></i></span>
+            </div>
+            <span class="error-msg" id="email-error" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-row two-col">
+          <div class="form-group" id="group-mobile">
+            <div class="field-group">
+              <input type="tel" id="mobileNumber" name="mobileNumber" placeholder=" "
+                     autocomplete="off" aria-required="true" aria-describedby="mobile-error" />
+              <label for="mobileNumber">Mobile Number <span class="req-star">*</span></label>
+              <span class="field-icon"><i class="fa-solid fa-mobile-screen-button"></i></span>
+            </div>
+            <span class="error-msg" id="mobile-error" role="alert"></span>
+          </div>
+
+          <div class="form-group" id="group-department">
+            <div class="field-group select-wrap">
+              <select id="department" name="department" aria-required="true" aria-describedby="department-error">
+                <option value="" disabled selected></option>
+                <optgroup label="Science & Technology">
+                  <option value="CSE">Computer Science &amp; Engineering</option>
+                  <option value="IT">Information Technology</option>
+                  <option value="ECE">Electronics &amp; Communication</option>
+                  <option value="EEE">Electrical &amp; Electronics</option>
+                  <option value="MECH">Mechanical Engineering</option>
+                  <option value="CIVIL">Civil Engineering</option>
+                </optgroup>
+                <optgroup label="Management">
+                  <option value="MBA">Master of Business Administration</option>
+                  <option value="BBA">Bachelor of Business Administration</option>
+                  <option value="FINANCE">Finance &amp; Accounting</option>
+                </optgroup>
+                <optgroup label="Science">
+                  <option value="PHYSICS">Physics</option>
+                  <option value="CHEMISTRY">Chemistry</option>
+                  <option value="MATH">Mathematics</option>
+                  <option value="BIO">Biotechnology</option>
+                </optgroup>
+                <optgroup label="Humanities">
+                  <option value="ENGLISH">English Literature</option>
+                  <option value="HISTORY">History</option>
+                  <option value="PSYCH">Psychology</option>
+                  <option value="SOCIO">Sociology</option>
+                </optgroup>
+              </select>
+              <label for="department">Department <span class="req-star">*</span></label>
+            </div>
+            <span class="error-msg" id="department-error" role="alert"></span>
+          </div>
+        </div>
+
+        <div class="form-group" id="group-gender">
+          <div class="section-label">
+            <i class="fa-solid fa-venus-mars"></i> Gender <span class="req-star">*</span>
+          </div>
+          <div class="gender-options">
+            <label class="radio-chip" for="male">
+              <input type="radio" id="male" name="gender" value="Male" />
+              <i class="fa-solid fa-mars"></i> Male
+            </label>
+            <label class="radio-chip" for="female">
+              <input type="radio" id="female" name="gender" value="Female" />
+              <i class="fa-solid fa-venus"></i> Female
+            </label>
+            <label class="radio-chip" for="other">
+              <input type="radio" id="other" name="gender" value="Other" />
+              <i class="fa-solid fa-transgender"></i> Other
+            </label>
+            <label class="radio-chip" for="prefer-not">
+              <input type="radio" id="prefer-not" name="gender" value="Prefer not to say" />
+              <i class="fa-solid fa-circle-user"></i> Prefer not to say
+            </label>
+          </div>
+          <span class="error-msg" id="gender-error" role="alert"></span>
+        </div>
+
+        <div class="form-group" id="group-rating">
+          <div class="section-label"><i class="fa-solid fa-star"></i> Overall Rating</div>
+          <div class="star-row" id="starRow" role="radiogroup" aria-label="Rating">
+            <i class="fa-solid fa-star" data-val="1" tabindex="0" role="radio" aria-label="1 star"></i>
+            <i class="fa-solid fa-star" data-val="2" tabindex="0" role="radio" aria-label="2 stars"></i>
+            <i class="fa-solid fa-star" data-val="3" tabindex="0" role="radio" aria-label="3 stars"></i>
+            <i class="fa-solid fa-star" data-val="4" tabindex="0" role="radio" aria-label="4 stars"></i>
+            <i class="fa-solid fa-star" data-val="5" tabindex="0" role="radio" aria-label="5 stars"></i>
+          </div>
+          <input type="hidden" id="rating" name="rating" value="" />
+        </div>
+
+        <div class="form-group" id="group-feedback">
+          <div class="field-group textarea-wrap">
+            <textarea id="feedbackComments" name="feedbackComments" placeholder=" "
+                      rows="5" aria-required="true" aria-describedby="feedback-error"></textarea>
+            <label for="feedbackComments">Feedback Comments <span class="req-star">*</span> (min. 10 words)</label>
+          </div>
+          <div id="feedback-wordcount" class="bad">0 / 10 words minimum</div>
+          <span class="error-msg" id="feedback-error" role="alert"></span>
+        </div>
+
+        <div class="btn-row">
+          <button type="reset" class="btn-reset" id="resetBtn">
+            <i class="fa-solid fa-rotate-left"></i> Reset
+          </button>
+          <button type="submit" class="btn-submit" id="submitBtn">
+            <span class="btn-text">Submit Feedback</span>
+            <i class="fa-solid fa-paper-plane btn-arrow"></i>
+          </button>
+        </div>
+
+      </form>
+
+      <div id="successMsg" class="success-msg hidden" role="status">
+        <div class="success-anim">
+          <i class="fa-solid fa-circle-check"></i>
+        </div>
+        <h2>Thank you for your feedback!</h2>
+        <p>Your response has been recorded. We appreciate you taking the time to help us improve.</p>
+        <button onclick="triggerReset()" class="btn-another">
+          <i class="fa-solid fa-plus"></i> Submit Another
+        </button>
+      </div>
+
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <p>&copy; 2025 StudentFeedback Portal &mdash; All responses are anonymous and confidential.</p>
+  </footer>
+
+  <script src="validation.js"></script>
+</body>
+</html>
